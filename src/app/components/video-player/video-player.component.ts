@@ -18,32 +18,32 @@ export class VideoPlayerComponent implements OnInit {
   mainChannelName: any;
   mainAuthorThumbnail: any;
 
-  constructor(
+  constructor(private router: Router,
     private route: ActivatedRoute,
     private videoService: VideosService,
     private sanitizer: DomSanitizer 
   ) {
-    this.route.params.subscribe(params => {
-      this.videoID = params.id;
-      console.log(this.videoID);
-    });
   }
 
   ngOnInit(): void {
-    this.videoService.getJSON().subscribe(data => {
-      console.log(data);
-      this.videos = data;
-      for(let key in this.videos) {
-        if(this.videos[key].id === this.videoID) {
-          this.mainTitle = this.videos[key].title;
-          this.mainViews = this.videos[key].views;
-          this.mainElapsedTime = this.videos[key].time_elapsed;
-          this.mainChannelName = this.videos[key].author_name;
-          this.mainAuthorThumbnail = this.videos[key].author_thumbnail;
-          this.iframeHTML = this.sanitizer.bypassSecurityTrustHtml(this.videos[key].html);
+    this.route.params.subscribe(params => {
+      this.videoID = params.id;
+      this.videoService.getJSON().subscribe(data => {
+        console.log(data);
+        this.videos = data;
+        for(let key in this.videos) {
+          if(this.videos[key].id === this.videoID) {
+            this.mainTitle = this.videos[key].title;
+            this.mainViews = this.videos[key].views;
+            this.mainElapsedTime = this.videos[key].time_elapsed;
+            this.mainChannelName = this.videos[key].author_name;
+            this.mainAuthorThumbnail = this.videos[key].author_thumbnail;
+            this.iframeHTML = this.sanitizer.bypassSecurityTrustHtml(this.videos[key].html);
+          }
         }
-      }
+      });
     });
+
   }
 
   toggleSearchBox() {
@@ -72,6 +72,10 @@ export class VideoPlayerComponent implements OnInit {
         wrapper.classList.add('menu_small');
       }
     }
+  }
+
+  goToVideoPlayerPage(id) {
+    this.router.navigate(['/watch', id]);
   }
 
 }

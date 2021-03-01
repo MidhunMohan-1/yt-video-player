@@ -168,10 +168,11 @@
             </div>
         </div>
 
-        <div class="col-12 m-0 row b-b b-t pt-2 pb-2 mt-3 mb-3" style="    border-bottom: 1px solid #e4e4e4;
+        <div class="col-12 m-0 row b-b b-t pt-2 pb-2 mt-3 mb-3" style="border-bottom: 1px solid #e4e4e4;
         border-top:1px solid #e4e4e4;">
             <div class="col-1 p-0">
-                <img class="avatar" [src]="mainAuthorThumbnail" alt="Man free icon" title="Man free icon">
+                <img class="avatar" [src]="mainAuthorThumbnail" style="width: 40px;
+                max-width: 100%;" alt="Man free icon" title="Man free icon">
             </div>
             <div class="col-11">
                 <span class="title">{{mainChannelName}}</span>
@@ -179,7 +180,7 @@
             </div>
         </div>
 
-        <div *ngFor="let video of videos" style="cursor: pointer;">
+        <div *ngFor="let video of videos" style="cursor: pointer;" (click)="goToVideoPlayerPage(video.id)">
             <img class="thumbnail" [src]="video.thumbnail_url" alt="" width="100%">
             <div class="col-12 row mt-4 mb-4">
                 <div class="col-1 p-0">
